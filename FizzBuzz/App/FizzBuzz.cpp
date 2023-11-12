@@ -1,40 +1,40 @@
 #include "FizzBuzz.h"
 
 FizzBuzz::FizzBuzz()
-    : FizzDivisor(DefaultFizzValue)
-    , BuzzDivisor(DefaultBuzzValue)
 {
+    FizzMatcherFunction = nullptr;
+    BuzzMatcherFunction = nullptr;
 }
 
-int FizzBuzz::SetFizzValue(const int FizzValue)
+int FizzBuzz::SetFizzMatcher(bool (*fizzMatcher)(const int))
 {
-    FizzDivisor = FizzValue;
+    FizzMatcherFunction = fizzMatcher;
     return 0;
 }
 
-int FizzBuzz::SetBuzzValue(const int BuzzValue)
+int FizzBuzz::SetBuzzMatcher(bool (*buzzMatcher)(const int))
 {
-    BuzzDivisor = BuzzValue;
+    BuzzMatcherFunction = buzzMatcher;
     return 0;
 }
 
-std::vector<std::string> FizzBuzz::Run(const int LowerLimit, const int UpperLimit)
+std::vector<std::string> FizzBuzz::Run(const int lowerLimit, const int upperLimit)
 {
     std::vector<std::string> result = {};
 
-    if(LowerLimit > 0)
+    if(lowerLimit > 0)
     {
-        result = FizzBuzzLoop(LowerLimit, UpperLimit);
+        result = FizzBuzzLoop(lowerLimit, upperLimit);
     }
 
     return result;
 }
 
-std::vector<std::string> FizzBuzz::FizzBuzzLoop(const int LowerLimit, const int UpperLimit)
+std::vector<std::string> FizzBuzz::FizzBuzzLoop(const int lowerLimit, const int upperLimit)
 {
     std::vector<std::string> result = {};
 
-    for(int i = LowerLimit; i <= UpperLimit; ++i)
+    for(int i = lowerLimit; i <= upperLimit; ++i)
     {
         std::string numberString;
         AddFizzIfNeeded(numberString, i);
@@ -49,18 +49,38 @@ std::vector<std::string> FizzBuzz::FizzBuzzLoop(const int LowerLimit, const int 
 
 int FizzBuzz::AddFizzIfNeeded(std::string& numberString, const int value)
 {
-    if(value % FizzDivisor == 0)
+    if(FizzMatcherFunction != nullptr)
     {
-        numberString.append(FizzString);
+        if(FizzMatcherFunction(value))
+        {
+            numberString.append(FizzString);
+        }
+    }
+    else
+    {
+        if(DefaultFizzMatcher(value))
+        {
+            numberString.append(FizzString);
+        }
     }
     return 0;
 }
 
 int FizzBuzz::AddBuzzIfNeeded(std::string& numberString, const int value)
 {
-    if(value % BuzzDivisor == 0)
+    if(BuzzMatcherFunction != nullptr)
     {
-        numberString.append(BuzzString);
+        if(BuzzMatcherFunction(value))
+        {
+            numberString.append(BuzzString);
+        }
+    }
+    else
+    {
+        if(DefaultBuzzMatcher(value))
+        {
+            numberString.append(BuzzString);
+        }
     }
     return 0;
 }
@@ -72,4 +92,14 @@ int FizzBuzz::AddNumberIfNeeded(std::string& numberString, const int value)
         numberString.append(std::to_string(value));
     }
     return 0;
+}
+
+bool FizzBuzz::DefaultFizzMatcher(const int testValue)
+{
+    return testValue % DefaultFizzValue == 0;
+}
+
+bool FizzBuzz::DefaultBuzzMatcher(const int testValue)
+{
+    return testValue % DefaultBuzzValue == 0;
 }
