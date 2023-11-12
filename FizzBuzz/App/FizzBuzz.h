@@ -13,18 +13,20 @@ class FizzBuzz
 
 public:
     FizzBuzz();
-    int SetFizzValue(const int FizzValue = DefaultFizzValue);
-    int SetBuzzValue(const int BuzzValue = DefaultBuzzValue);
-    std::vector<std::string> Run(const int LowerLimit, const int UpperLimit);
+    int SetFizzMatcher(bool (*fizzMatcher)(const int) = nullptr);
+    int SetBuzzMatcher(bool (*buzzMatcher)(const int) = nullptr);
+    std::vector<std::string> Run(const int lowerLimit, const int upperLimit);
 
 private:
-    std::vector<std::string> FizzBuzzLoop(const int LowerLimit, const int UpperLimit);
+    std::vector<std::string> FizzBuzzLoop(const int lowerLimit, const int upperLimit);
     int AddFizzIfNeeded(std::string& numberString, const int i);
     int AddBuzzIfNeeded(std::string& numberString, const int i);
     int AddNumberIfNeeded(std::string& numberString, const int i);
+    bool DefaultFizzMatcher(const int testValue);
+    bool DefaultBuzzMatcher(const int testValue);
 
     int StartValue;
     int EndValue;
-    int FizzDivisor;
-    int BuzzDivisor;
+    bool (*FizzMatcherFunction)(const int);
+    bool (*BuzzMatcherFunction)(const int);
 };
