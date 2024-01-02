@@ -78,6 +78,44 @@ TEST(AlphabetCipherTest, GivenNoKey_WhenDecrypt_ThenReturnExpectedDecryption)
     EXPECT_STREQ(actualDecryption.c_str(), expectedDecryption.c_str());
 }
 
-// TODO: handle spaces in key and message
+TEST(AlphabetCipherTest, GivenKeyWithSpaces_WhenEncrypt_ThenReturnExpectedEncryptionHavingRemovedSpacesFromKey)
+{
+    AlphabetCipher cipher;
+    std::string expectedEncryption = "crncmlrxstg";
+    std::string keyword = "yel low ";
+    std::string message = "encryptthis";
+
+    cipher.SetKey(keyword);
+    std::string actualEncryption = cipher.Encrypt(message);
+
+    EXPECT_STREQ(actualEncryption.c_str(), expectedEncryption.c_str());
+}
+
+TEST(AlphabetCipherTest, GivenStringWithSpaces_WhenEncrypt_ThenReturnExectedEncryptionWithSpaces)
+{
+    AlphabetCipher cipher;
+    std::string expectedEncryption = "crncmlr eswo";
+    std::string keyword = "yel low ";
+    std::string message = "encrypt this";
+
+    cipher.SetKey(keyword);
+    std::string actualEncryption = cipher.Encrypt(message);
+
+    EXPECT_STREQ(actualEncryption.c_str(), expectedEncryption.c_str());
+}
+
+TEST(AlphabetCipherTest, GivenStringWithSpaces_WhenDecrypt_ThenReturnExectedDecryptionWithSpaces)
+{
+    AlphabetCipher cipher;
+    std::string expectedDecryption = "encrypt this";
+    std::string keyword = "yellow";
+    std::string message = "crncmlr eswo";
+
+    cipher.SetKey(keyword);
+    std::string actualDecryption = cipher.Decrypt(message);
+
+    EXPECT_STREQ(actualDecryption.c_str(), expectedDecryption.c_str());
+}
+
 // TODO: check for invalid characters in key and message?
 
