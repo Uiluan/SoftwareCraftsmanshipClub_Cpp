@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 11)
 include_directories(App)
 
 set(CLASS_FILES
-        App/Arithmetic.cpp)
+        App/ArithmeticSolver.cpp
+        App/ArithmeticSolver.h)
 add_executable(arithmetic ${CLASS_FILES} main.cpp)
 add_library(arithmetic_lib ${CLASS_FILES})
 
