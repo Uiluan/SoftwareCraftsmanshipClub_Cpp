@@ -33,15 +33,15 @@ RUN cmake . && make
 
 FROM ubuntu:latest AS app
 
-WORKDIR /opt/alphabetCipher
+WORKDIR /opt/orionsBagOfHolding
 
-COPY --from=build /src/alphabetCipher ./
+COPY --from=build /src/orionsBagOfHolding ./
 
-CMD ["./alphabetCipher"]
+CMD ["./orionsBagOfHolding"]
 
 FROM ubuntu:latest AS tests
 
-WORKDIR /opt/alphabetCipher
+WORKDIR /opt/orionsBagOfHolding
 
 COPY --from=build /src/Tests ./
 
