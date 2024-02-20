@@ -1,80 +1,43 @@
-#include <iostream>
-#include <string>
-#include <cctype>
-#include <list>
-#include <map>
-#include <unordered_map>
-
-// hpp files
-struct Item{
-    std::string description;
-    std::string Incantation;
-    std::string name;
-    int rarity;
-};
-
-using ItemNode = std::list<Item>::iterator;
-
-class OrionsBag{
-    public:
-        ItemNode Get(std::string name);
-        ItemNode Get(int rarity);
-        ItemNode GetRarest();
-        std::list<ItemNode> GetRarestN(int count);
-        ItemNode Add(Item item);
-        bool Remove(ItemNode it);
-    private:
-        std::list<Item> bag;
-        std::map<int, ItemNode> bagItemsByRarity;
-        std::unordered_map<std::string, ItemNode> bagItemsByName;
-};
-
-// cpp file
-ItemNode OrionsBag::Add(Item item)
-{
-    bag.push_front(item);
-    ItemNode it = bag.begin();
-    bagItemsByRarity.insert(std::make_pair(item.rarity, it));
-    bagItemsByName.insert(std::make_pair(item.name, it));
-    return it;
-}
-
-ItemNode OrionsBag::Get(std::string name)
-{
-    return bagItemsByName.at(name);
-}
-
-ItemNode OrionsBag::Get(int rarity)
-{
-    return bagItemsByRarity.at(rarity);
-}
-
-ItemNode OrionsBag::GetRarest()
-{
-    return bagItemsByRarity.rbegin()->second;
-}
-
-std::list<ItemNode> OrionsBag::GetRarestN(int count)
-{
-   std::list<ItemNode> topNKeys;
-   auto it = bagItemsByRarity.begin();
-   for (int i = 0; i < count && it != bagItemsByRarity.end(); ++i, ++it)
-   {
-       topNKeys.push_back(it->second);
-   }
-   return topNKeys;
-}
-
-bool OrionsBag::Remove(ItemNode it)
-{
-    bagItemsByRarity.erase(it->rarity);
-    bagItemsByName.erase(it->name);
-    bag.erase(it);
-    return true;
-}
+#include "App/OrionsBagOfHolding.h"
 
 int main()
 {
+    OrionsBag bag;
+
+    Item item1 = {"A sword", "Excalibur", "Sword of Kings", 100};
+    Item item2 = {"A shield", "Aegis", "Shield of Kings", 85};
+    Item item3 = {"A ring", "One Ring", "Ring of Kings", 101};
+    Item item4 = {"A sword", "Sting", "Sword of Hobbits", 54};
+
+    bag.Add(item1);
+    bag.Add(item2);
+    bag.Add(item3);
+    bag.Add(item4);
+
+    ItemNode it = bag.Get("Sword of Kings");
+    std::cout << "Item: " << it->name << " Rarity: " << it->rarity <<
+        " Description: " << it->description << " Incantation: " << it->Incantation << std::endl;
+
+    it = bag.Get(85);
+    std::cout << "Item: " << it->name << " Rarity: " << it->rarity <<
+        " Description: " << it->description << " Incantation: " << it->Incantation << std::endl;
+
+    it = bag.GetRarest();
+    std::cout << "Item: " << it->name << " Rarity: " << it->rarity <<
+        " Description: " << it->description << " Incantation: " << it->Incantation << std::endl;
+
+    std::list<ItemNode> topNKeys = bag.GetRarestN(2);
+    for (auto it = topNKeys.begin(); it != topNKeys.end(); ++it)
+    {
+        std::cout << "Item: " << (*it)->name << " Rarity: " << (*it)->rarity <<
+            " Description: " << (*it)->description << " Incantation: " << (*it)->Incantation << std::endl;
+    }
+
+    std::cout << "Removing Sword of Kings" << std::endl;
+    std::cout << "Starting list size: " << bag.GetBag().size() << std::endl;
+    bag.Remove(bag.Get("Sword of Kings"));
+    std::cout << "Ending list size: " << bag.GetBag().size() << std::endl;
+
     return 0;
 }
 

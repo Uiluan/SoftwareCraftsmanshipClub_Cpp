@@ -36,9 +36,3 @@ using the following:
 docker build --target=app -t <projectName>-app .
 docker run <projectName>-app
 ```
-
-To build and run the google tests, run the following:
-```
-docker build --target=tests -t <projectName>-tests .
-docker run <projectName>-tests
-```
