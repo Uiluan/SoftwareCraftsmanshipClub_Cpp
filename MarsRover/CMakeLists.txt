@@ -6,11 +6,11 @@ set(CMAKE_CXX_STANDARD 11)
 include_directories(App)
 
 set(CLASS_FILES
-        App/Rover/RoverController.cpp
-        App/Rover/RoverController.h
+        App/RoverController/RoverController.cpp
+        App/RoverController/RoverController.h
         App/CommandParser/CommandParser.cpp
         App/CommandParser/CommandParser.h)
 add_executable(marsrover ${CLASS_FILES} main.cpp)
-#add_library(MarsRover_lib ${CLASS_FILES})
+add_library(MarsRover_lib ${CLASS_FILES})
 
-#add_subdirectory(Tests)
+add_subdirectory(Tests)
