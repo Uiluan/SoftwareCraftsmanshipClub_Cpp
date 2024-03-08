@@ -7,7 +7,8 @@ namespace Rover
         North,
         East,
         South,
-        West
+        West,
+        LastDirection
     };
 
     using Coordinate = std::pair<int, int>;
@@ -15,7 +16,7 @@ namespace Rover
     class RoverController
     {
         public:
-            RoverController();
+            RoverController(const int x = 0,  const int y = 0, const Direction direction = Direction::North, const int maxGridSize = 10);
             Coordinate Forward();
             Direction TurnLeft();
             Direction TurnRight();
@@ -23,8 +24,8 @@ namespace Rover
             Direction GetDirection();
             
         private:
+            int MaxGridSize;
             Coordinate Location;
             Direction CardinalDirection;
-            int MaxGridSize;
     };
 }
