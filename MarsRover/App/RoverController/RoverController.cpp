@@ -10,7 +10,7 @@ namespace Rover
     {
     }
 
-    Coordinate RoverController::Forward()
+    Coordinate RoverController::MoveForward()
     {
         switch(CardinalDirection)
         {

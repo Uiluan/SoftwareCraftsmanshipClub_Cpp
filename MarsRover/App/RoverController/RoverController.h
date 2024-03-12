@@ -1,27 +1,19 @@
-#include <utility>
+#ifndef ROVER_CONTROLLER_H
+#define ROVER_CONTROLLER_H
+
+#include "RoverControllerInterface.h"
 
 namespace Rover
 {
-    enum class Direction
-    {
-        North,
-        East,
-        South,
-        West,
-        LastDirection
-    };
-
-    using Coordinate = std::pair<int, int>;
-    
-    class RoverController
+    class RoverController : public RoverControllerInterface
     {
         public:
             RoverController(const int x = 0,  const int y = 0, const Direction direction = Direction::North, const int maxGridSize = 10);
-            Coordinate Forward();
-            Direction TurnLeft();
-            Direction TurnRight();
-            Coordinate GetLocation();
-            Direction GetDirection();
+            Coordinate MoveForward() override;
+            Direction TurnLeft() override;
+            Direction TurnRight() override;
+            Coordinate GetLocation() override;
+            Direction GetDirection() override;
             
         private:
             int MaxGridSize;
@@ -29,3 +21,5 @@ namespace Rover
             Direction CardinalDirection;
     };
 }
+
+#endif
