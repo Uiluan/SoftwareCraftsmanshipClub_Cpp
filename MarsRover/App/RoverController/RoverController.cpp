@@ -15,17 +15,16 @@ namespace Rover
         switch(CardinalDirection)
         {
             case Direction::North:
-                Location.second = (1 + Location.second + MaxGridSize) % MaxGridSize;
-             //   (Location.second == MaxGridSize) ? Location.second = 0 : Location.second += 1;
+                Location.second = ((Location.second + MaxGridSize) + 1) % MaxGridSize;
                 break;
             case Direction::East:
-             //   (Location.first == MaxGridSize) ? Location.first = 0 : Location.first += 1;
+                Location.first = ((Location.first + MaxGridSize) + 1) % MaxGridSize;
                 break;
             case Direction::South:
-             //   (Location.second == 0) ? Location.second = MaxGridSize : Location.second -= 1;
+                Location.second = ((Location.second + MaxGridSize) - 1) % MaxGridSize;
                 break;
             case Direction::West:
-             //   (Location.first == 0) ? Location.first = MaxGridSize : Location.first -= 1;
+                Location.first = ((Location.first + MaxGridSize) - 1) % MaxGridSize;
                 break;
         }
         return Location;
@@ -33,16 +32,14 @@ namespace Rover
 
     Direction RoverController::TurnLeft()
     {
-       // (CardinalDirection == Direction::North) ? CardinalDirection = Direction::West : 
-       //     CardinalDirection = static_cast<Direction>(static_cast<int>(CardinalDirection) - 1);
-        return CardinalDirection;
+        return static_cast<Direction>((static_cast<int>(CardinalDirection) +
+            static_cast<int>(Direction::LastDirection) - 1) % static_cast<int>(Direction::LastDirection));
     }
 
     Direction RoverController::TurnRight()
     {
-       // (CardinalDirection == Direction::West) ? CardinalDirection = Direction::North :
-       //     CardinalDirection = static_cast<Direction>(static_cast<int>(CardinalDirection) + 1);
-        return CardinalDirection;
+        return static_cast<Direction>((static_cast<int>(CardinalDirection) +
+            static_cast<int>(Direction::LastDirection) + 1) % static_cast<int>(Direction::LastDirection));
     }
 
     Coordinate RoverController::GetLocation()
