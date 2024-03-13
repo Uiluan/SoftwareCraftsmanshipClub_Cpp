@@ -1,3 +1,4 @@
+#include "RoverController/RoverControllerInterface.h"
 #include <string>
 
 namespace Rover
@@ -6,6 +7,6 @@ namespace Rover
     {
         public:
             CommandParser();
-            bool ParseCommandString(std::string& command);
+            bool ExecuteCommand(RoverControllerInterface& rover, std::string& command);
     };
 }

@@ -18,6 +18,7 @@ namespace Rover
     class RoverControllerInterface 
     {
     public:
+        virtual ~RoverControllerInterface() {}
         virtual Coordinate MoveForward() = 0;
         virtual Direction TurnLeft() = 0;
         virtual Direction TurnRight() = 0;

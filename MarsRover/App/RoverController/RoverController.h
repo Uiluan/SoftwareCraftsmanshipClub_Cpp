@@ -9,6 +9,7 @@ namespace Rover
     {
         public:
             RoverController(const int x = 0,  const int y = 0, const Direction direction = Direction::North, const int maxGridSize = 10);
+            ~RoverController();
             Coordinate MoveForward() override;
             Direction TurnLeft() override;
             Direction TurnRight() override;

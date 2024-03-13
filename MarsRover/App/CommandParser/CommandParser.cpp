@@ -7,7 +7,7 @@ namespace Rover
 
     }
 
-    bool CommandParser::ParseCommandString(std::string& command)
+    bool CommandParser::ExecuteCommand(RoverControllerInterface& rover, std::string& command)
     {
         return true;
     }

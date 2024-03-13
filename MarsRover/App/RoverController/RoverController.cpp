@@ -10,6 +10,8 @@ namespace Rover
     {
     }
 
+    RoverController::~RoverController() = default;
+
     Coordinate RoverController::MoveForward()
     {
         switch(CardinalDirection)
