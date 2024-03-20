@@ -7,6 +7,6 @@ namespace Rover
     {
         public:
             CommandParser();
-            bool ExecuteCommand(RoverControllerInterface& rover, std::string& command);
+            bool ExecuteCommand(RoverControllerInterface& rover, const std::string& command);
     };
 }
